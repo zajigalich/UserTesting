@@ -20,12 +20,48 @@ internal static class DataSeedModelBuilderExtensions
 			"11bac029-c18b-40dd-baca-2854e731149f",
 			"bf97c9eb-46e2-487e-9bd8-b0ec737a90e9",
 		};
+		var userRoleId = "d96d22fd-fbe0-4ba1-a8d0-7f076c3e3edd";
 
+		SeedRole(modelBuilder, userRoleId);
 		SeedUsers(modelBuilder, userIds);
+
+		// Assign User role to seeded users
+		SeedUserRole(modelBuilder, userIds, userRoleId);
 		SeedTests(modelBuilder, testsIds);
 		
 		// Assigning users to tests
 		SeedUserTests(modelBuilder, userIds, testsIds);
+	}
+
+	private static void SeedUserRole(ModelBuilder modelBuilder, List<string> userIds, string userRoleId)
+	{
+		var roleUsers = new List<IdentityUserRole<string>>()
+			{
+				new IdentityUserRole<string>()
+				{
+					RoleId = userRoleId,
+					UserId = userIds[0],
+				},
+				new IdentityUserRole<string>()
+				{
+					RoleId = userRoleId,
+					UserId = userIds[1],
+				}
+			};
+
+		modelBuilder.Entity<IdentityUserRole<string>>().HasData(roleUsers);
+	}
+
+	private static void SeedRole(ModelBuilder modelBuilder, string userRoleId)
+	{
+		modelBuilder.Entity<IdentityRole>().HasData(
+			new IdentityRole()
+			{
+				Id = userRoleId,
+				Name = "User",
+				NormalizedName = "USER",
+				ConcurrencyStamp = userRoleId
+			});
 	}
 
 	private static void SeedUserTests(ModelBuilder modelBuilder, List<string> userIds, List<Guid> testsIds)
