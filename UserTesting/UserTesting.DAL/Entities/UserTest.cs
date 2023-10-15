@@ -7,13 +7,14 @@ namespace UserTesting.DAL.Entities;
 public class UserTest
 {
 	[NotNull]
-	public Guid UserId { get; set; }
+	public string UserId { get; set; }
 
 	[NotNull]
 	public Guid TestId { get; set; }
 
 	[Precision(5, 2)]
-	public decimal Mark { get; set; }
+	[AllowNull]
+	public decimal? Mark { get; set; }
 
 	// Navigational props
 

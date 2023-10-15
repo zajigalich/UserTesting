@@ -48,7 +48,7 @@ public class UserTestingDbContext : IdentityDbContext<User>
 				.Ignore(c => c.AccessFailedCount)
 				.Ignore(c => c.EmailConfirmed);
 
-		// Seed Tests
-		modelBuilder.SeedTests();
+		// Seed Tests, Users and TestUsers
+		modelBuilder.SeedData();
 	}
 }
