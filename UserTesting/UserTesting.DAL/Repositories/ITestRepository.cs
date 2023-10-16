@@ -4,5 +4,7 @@ namespace UserTesting.DAL.Repositories;
 
 public interface ITestRepository
 {
-	Task<Test?> GetById(Guid id);
+	Task<Test?> GetByIdAsync(Guid id);
+
+	Task<IEnumerable<Test>> GetAllByUserIdAsync(string userId);
 }

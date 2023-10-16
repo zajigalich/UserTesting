@@ -13,7 +13,16 @@ public class TestRepository : ITestRepository
 		_dbContext = dbContext;
 	}
 
-	public async Task<Test?> GetById(Guid id)
+	public async Task<IEnumerable<Test>> GetAllByUserIdAsync(string userId)
+	{
+		return await _dbContext.UserTests
+			.Include(ut => ut.Test)
+			.Where(ut => ut.UserId == userId)
+			.Select(ut => ut.Test)
+			.ToListAsync();
+	}
+
+	public async Task<Test?> GetByIdAsync(Guid id)
 	{
 		return await _dbContext.Tests.FirstOrDefaultAsync(x => x.Id == id);
 	}
