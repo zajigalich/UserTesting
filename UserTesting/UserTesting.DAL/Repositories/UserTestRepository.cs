@@ -13,7 +13,7 @@ public class UserTestRepository : IUserTestRepository
 		_dbContext = dbContext;
 	}
 
-	public async Task<IEnumerable<UserTest>> GetAllByUserId(string userId)
+	public async Task<IEnumerable<UserTest>> GetAllByUserIdAsync(string userId)
 	{
 		return await _dbContext.UserTests
 					.Include(ut => ut.Test)
