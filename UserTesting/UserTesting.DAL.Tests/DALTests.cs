@@ -49,11 +49,10 @@ public class DALTests
 	}
 
 	[Test]
-	//[TestCaseSource(nameof(GetUserTestsData))]
-	public async Task UserTest_GetAllByUserIdAsync_Returns_All_UserTests_For_Given_User()
+	[TestCaseSource(nameof(GetTestsAssignedForUser))]
+	public async Task UserTest_GetAllByUserIdAsync_Returns_All_UserTests_For_Given_User(string userId, List<Test> expectedTests)
 	{
 		// Arrange
-		var userId = "11bac029-c18b-40dd-baca-2854e731149f";
 		var userTestRepo = new UserTestRepository(_dbContext);
 
 		// Act
@@ -62,6 +61,13 @@ public class DALTests
 		// Assert
 		Assert.That(userTests.Count, Is.EqualTo(3));
 		Assert.That(userTests.TrueForAll(ut => ut.UserId == userId), Is.True);
+
+		var comparer = new ObjectComparer();
+		int c = 0;
+		foreach (var test in expectedTests)
+		{
+			comparer.Compare(test, expectedTests[c++]);
+		}
 	}
 
 	[Test]
@@ -86,16 +92,265 @@ public class DALTests
 		comparer.Compare(expectedUserTest, userTest);
 	}
 
+	[Test]
+	public async Task Test_GetByIdAsync_Returns_Null_When_Test_Does_Not_Exist()
+	{
+		// Arrange
+		var nonexistentTestId = Guid.NewGuid();
+		var testRepo = new TestRepository(_dbContext);
+
+		// Act
+		var resultTest = await testRepo.GetByIdAsync(nonexistentTestId);
+
+		// Assert
+		Assert.That(resultTest, Is.Null);
+	}
+
+	[Test]
+	public async Task UserTest_GetAsync_Returns_Null_When_UserTest_Does_Not_Exist()
+	{
+		// Arrange
+		var nonexistentUserId = "nonexistentUserId";
+		var nonexistentTestId = Guid.NewGuid();
+		var userTestRepo = new UserTestRepository(_dbContext);
+
+		// Act
+		var resultUserTest = await userTestRepo.GetAsync(nonexistentUserId, nonexistentTestId);
+
+		// Assert
+		Assert.That(resultUserTest, Is.Null);
+	}
+
 	private static IEnumerable<UserTest> GetUserTestsData()
 	{
 		var userTests = new List<UserTest>
 		{
-			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("ba4dfdda-e505-402e-8be2-d2c619974c9e"), Mark = 0.8m, Passed = true },
-			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("2cbae21d-0651-4609-b77c-a0d69af10349"), Mark = 0.3m, Passed = true },
-			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974") },
+			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("ba4dfdda-e505-402e-8be2-d2c619974c9e"), Mark = 0.8m, Passed = true, Test = new Test
+			{
+				Id = Guid.Parse("ba4dfdda-e505-402e-8be2-d2c619974c9e"),
+				Name = "Test 1",
+				Description = "This is Test 1",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			}},
+			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("2cbae21d-0651-4609-b77c-a0d69af10349"), Mark = 0.3m, Passed = true, Test = new Test
+			{
+				Id = Guid.Parse("2cbae21d-0651-4609-b77c-a0d69af10349"),
+				Name = "Test 2",
+				Description = "This is Test 2",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			} },
+			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974"), Test = new Test
+			{
+				Id = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974"),
+				Name = "Test 3",
+				Description = "This is Test 3",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			} },
 
-			new UserTest { UserId = "bf97c9eb-46e2-487e-9bd8-b0ec737a90e9", TestId = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974") },
-			new UserTest { UserId = "bf97c9eb-46e2-487e-9bd8-b0ec737a90e9", TestId = Guid.Parse("0ccda22e-372a-48ef-afc6-9dc8b41007e1") },
+			new UserTest { UserId = "bf97c9eb-46e2-487e-9bd8-b0ec737a90e9", TestId = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974"), Test = new Test
+			{
+				Id = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974"),
+				Name = "Test 3",
+				Description = "This is Test 3",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			} },
+			new UserTest { UserId = "bf97c9eb-46e2-487e-9bd8-b0ec737a90e9", TestId = Guid.Parse("0ccda22e-372a-48ef-afc6-9dc8b41007e1"), Test = new Test
+			{
+				Id = Guid.Parse("0ccda22e-372a-48ef-afc6-9dc8b41007e1"),
+				Name = "Test 4",
+				Description = "This is Test 4",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			} },
 		};
 		return userTests;
 	}
@@ -287,5 +542,151 @@ public class DALTests
 		};
 
 		return tests;
+	}
+
+	private static IEnumerable<object[]> GetTestsAssignedForUser()
+	{
+		var userId = "11bac029-c18b-40dd-baca-2854e731149f";
+
+		var tests = new List<Test>
+		{
+			new Test
+			{
+				Id = Guid.Parse("ba4dfdda-e505-402e-8be2-d2c619974c9e"),
+				Name = "Test 1",
+				Description = "This is Test 1",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			},
+			new Test
+			{
+				Id = Guid.Parse("2cbae21d-0651-4609-b77c-a0d69af10349"),
+				Name = "Test 2",
+				Description = "This is Test 2",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			},
+			new Test
+			{
+				Id = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974"),
+				Name = "Test 3",
+				Description = "This is Test 3",
+				Questions = new List<Question>
+				{
+					new Question
+					{
+						Ordinal = 1,
+						Text = "Question 1",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
+					},
+					new Question
+					{
+						Ordinal = 2,
+						Text = "Question 2",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
+					},
+					new Question
+					{
+						Ordinal = 3,
+						Text = "Question 3",
+						Options = new List<Option>
+						{
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
+						},
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
+					},
+				}
+			}
+		};
+
+		return new List<object[]> { new object[] { userId, tests } };
 	}
 }
