@@ -8,5 +8,5 @@ public class TestDto
 
 	public string Description { get; set; }
 
-	public List<QuestionWithoutAnswerDto> Questions { get; set; }
+	public List<QuestionDto> Questions { get; set; }
 }

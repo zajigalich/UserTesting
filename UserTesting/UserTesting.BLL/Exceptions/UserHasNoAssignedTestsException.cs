@@ -2,9 +2,9 @@
 
 namespace UserTesting.BLL.Exceptions;
 
-public class UserHasNoAssignedTests : AppException
+public class UserHasNoAssignedTestsException : AppException
 {
-    public UserHasNoAssignedTests(string username)
+    public UserHasNoAssignedTestsException(string username)
         : base($"User {username} has no assigned tests")
     {
     }

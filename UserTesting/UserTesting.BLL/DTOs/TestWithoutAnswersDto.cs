@@ -1,6 +1,6 @@
 ﻿namespace UserTesting.BLL.DTOs;
 
-public class TestWithoutAnswerDto
+public class TestWithoutAnswersDto
 {
 	public Guid Id { get; set; }
 
