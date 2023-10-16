@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using UserTesting.DAL.Entities;
 using UserTesting.DAL.Data;
+using UserTesting.API.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,9 @@ builder.Services.AddOutputCache(options =>
 // Configure services from class libs (adding them to container)
 builder.Services.ConfigureBusinessLogicLayerServices();
 builder.Services.ConfigureDataAccessLayerServices(builder.Configuration.GetConnectionString("UserTestingConnectionString")!);
+
+// Add Automapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 // Add Identity core
 builder.Services.AddIdentityCore<User>()
