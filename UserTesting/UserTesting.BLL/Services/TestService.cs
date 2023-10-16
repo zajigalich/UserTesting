@@ -1,11 +1,25 @@
-﻿using UserTesting.DAL.Entities;
+﻿using AutoMapper;
+using UserTesting.BLL.DTOs;
+using UserTesting.DAL.Entities;
+using UserTesting.DAL.UnitOfWork;
 
 namespace UserTesting.BLL.Services;
 
 public class TestService : ITestService
 {
-	public Task<IEnumerable<Test>> GetAssignedToUser(User user)
+	private readonly IUnitOfWork _unitOfWork;
+	private readonly IMapper _mapper;
+
+	public TestService(IUnitOfWork unitOfWork, IMapper mapper)
+    {
+		_unitOfWork = unitOfWork;
+		_mapper = mapper;
+	}
+
+    public async Task<IEnumerable<TestWithoutAnswerDto>> GetNotAnsweredAssignedToUser(User user)
 	{
-		throw new NotImplementedException();
+		var tests = await _unitOfWork.TestRepository.GetAllByUserIdAsync(user.Id);
+
+
 	}
 }

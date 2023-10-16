@@ -1,8 +1,9 @@
-﻿using UserTesting.DAL.Entities;
+﻿using UserTesting.BLL.DTOs;
+using UserTesting.DAL.Entities;
 
 namespace UserTesting.BLL.Services;
 
 public interface ITestService
 {
-	Task<IEnumerable<Test>> GetAssignedToUser(User user); 
+	Task<IEnumerable<TestWithoutAnswerDto>> GetNotAnsweredAssignedToUser(User user); 
 }
