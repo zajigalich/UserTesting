@@ -1,14 +1,13 @@
 ﻿using Gamestore.BLL.Exceptions;
-using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace UserTesting.API.Middlewares;
 
-public class ExceptionHandlerMiddleware
+public class AppExceptionHandlerMiddleware
 {
 	private readonly RequestDelegate _next;
 
-	public ExceptionHandlerMiddleware(RequestDelegate next)
+	public AppExceptionHandlerMiddleware(RequestDelegate next)
 	{
 		_next = next;
 	}
