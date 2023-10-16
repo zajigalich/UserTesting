@@ -5,5 +5,5 @@ namespace UserTesting.BLL.Services;
 
 public interface ITestService
 {
-	Task<IEnumerable<TestWithoutAnswerDto>> GetNotAnsweredAssignedToUser(User user); 
+	Task<IEnumerable<UserTestDto>> GetNotAnsweredAssignedToUser(string userId); 
 }

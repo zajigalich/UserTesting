@@ -16,10 +16,12 @@ public class TestService : ITestService
 		_mapper = mapper;
 	}
 
-    public async Task<IEnumerable<TestWithoutAnswerDto>> GetNotAnsweredAssignedToUser(User user)
+    public async Task<IEnumerable<UserTestDto>> GetNotAnsweredAssignedToUser(string userId)
 	{
-		var tests = await _unitOfWork.TestRepository.GetAllByUserIdAsync(user.Id);
+		var tests = await _unitOfWork.UserTestRepository.GetAllByUserIdAsync(userId);
 
-		return null;
+		var userTestDtos = _mapper.Map<List<UserTestDto>>(tests);
+
+		return userTestDtos;
 	}
 }
