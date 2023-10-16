@@ -203,7 +203,7 @@ namespace UserTesting.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tests");
+                    b.ToTable("Tests", (string)null);
 
                     b.HasData(
                         new
@@ -334,7 +334,7 @@ namespace UserTesting.DAL.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("UserTests");
+                    b.ToTable("UserTests", (string)null);
 
                     b.HasData(
                         new

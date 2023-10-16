@@ -16,10 +16,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserTesting.BLL", "UserTest
 		{05F78322-515C-4918-84EE-F9CABCBA2C90} = {05F78322-515C-4918-84EE-F9CABCBA2C90}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserTesting.DAL.Tests", "UserTesting.DAL.Tests\UserTesting.DAL.Tests.csproj", "{43F1A936-F8DB-46CC-99F2-70065A118917}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserTesting.DAL.Tests", "UserTesting.DAL.Tests\UserTesting.DAL.Tests.csproj", "{43F1A936-F8DB-46CC-99F2-70065A118917}"
 	ProjectSection(ProjectDependencies) = postProject
 		{05F78322-515C-4918-84EE-F9CABCBA2C90} = {05F78322-515C-4918-84EE-F9CABCBA2C90}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserTesting.BLL.Tests", "UserTesting.BLL.Tests\UserTesting.BLL.Tests.csproj", "{F3D20138-01E7-4EC0-9F1A-A1B45C1345CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{43F1A936-F8DB-46CC-99F2-70065A118917}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43F1A936-F8DB-46CC-99F2-70065A118917}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43F1A936-F8DB-46CC-99F2-70065A118917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D20138-01E7-4EC0-9F1A-A1B45C1345CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D20138-01E7-4EC0-9F1A-A1B45C1345CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D20138-01E7-4EC0-9F1A-A1B45C1345CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D20138-01E7-4EC0-9F1A-A1B45C1345CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
