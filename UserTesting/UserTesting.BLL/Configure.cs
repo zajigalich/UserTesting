@@ -9,5 +9,6 @@ public static class Configure
 	{
 		// Add Services
 		services.AddScoped<ITokenService, TokenService>();
+		services.AddScoped<ITestService, TestService>();
 	}
 }
