@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using UserTesting.API.Models;
 using UserTesting.BLL.DTOs;
 using UserTesting.DAL.Entities;
 
@@ -18,5 +19,8 @@ public class AutoMapperProfile : Profile
         CreateMap<Option, OptionDto>();
         CreateMap<Question, QuestionWithoutAnswerDto>();
         CreateMap<Question, QuestionDto>();
+
+        CreateMap<PassTestRequest, TestAnswersDto>();
+        CreateMap<PassTestRequest.Answer, TestAnswersDto.AnswerDto>();
     }
 }

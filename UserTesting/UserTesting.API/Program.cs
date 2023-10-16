@@ -53,10 +53,6 @@ builder.Services.AddOutputCache(options =>
 		builder
 		.Tag("tag-all")
 		.Expire(TimeSpan.FromSeconds(60)));
-	options.AddBasePolicy(builder =>
-		builder.With(r => r.HttpContext.Request.Path.StartsWithSegments("/api/Tests"))
-		.Tag("tag-test")
-		.Expire(TimeSpan.FromSeconds(60)));
 });
 
 // Configure services from class libs (adding them to container)

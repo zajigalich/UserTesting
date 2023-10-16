@@ -32,16 +32,59 @@ public class TestService : ITestService
 		var userTest = await _unitOfWork.UserTestRepository.GetAsync(user.Id, testId)
 			?? throw new UserHasNoAccessToTestException(user.UserName, testId);
 
-		VerifyTestIsNotPassed(user, testId, userTest);
+		VerifyTestIsNotPassed(user, userTest);
 
 		return _mapper.Map<TestWithoutAnswersDto>(userTest.Test);
 	}
 
-	private static void VerifyTestIsNotPassed(User user, Guid testId, UserTest userTest)
+	public async Task<UserTestDto> PassAsync(User user, TestAnswersDto testAnswersDto)
+	{
+		await VerifyTestExistsAsync(testAnswersDto.TestId);
+
+		var userTest = await _unitOfWork.UserTestRepository.GetAsync(user.Id, testAnswersDto.TestId)
+			?? throw new UserHasNoAccessToTestException(user.UserName, testAnswersDto.TestId);
+
+		VerifyTestIsNotPassed(user, userTest);
+
+		userTest.Mark = CalculateMark(testAnswersDto, userTest.Test);
+		userTest.Passed = true;
+
+		await _unitOfWork.SaveAsync();
+
+		return _mapper.Map<UserTestDto>(userTest);
+	}
+
+	private static decimal CalculateMark(TestAnswersDto testAnswersDto, Test test)
+	{
+		var totalQuestion = test.Questions.Count;
+		var correctAnswers = 0;
+
+		foreach (var question in test.Questions)
+		{
+			var answer = testAnswersDto.Answers.FirstOrDefault(a => a.QuestionOrdinal == question.Ordinal);
+
+			if (answer == null)
+			{
+				continue;
+			}
+
+			bool isCorrect = answer.AnswerOrdinal == question.Answer.Ordinal;
+
+			if (isCorrect)
+			{
+				correctAnswers++;
+			}
+		}
+
+		decimal mark = (decimal)correctAnswers / totalQuestion;
+		return mark;
+	}
+
+	private static void VerifyTestIsNotPassed(User user, UserTest userTest)
 	{
 		if (userTest.Passed)
 		{
-			throw new UserAlreadyPassedTestException(user.UserName, testId);
+			throw new UserAlreadyPassedTestException(user.UserName, userTest.TestId);
 		}
 	}
 
