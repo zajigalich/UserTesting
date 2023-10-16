@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using UserTesting.BLL.DTOs;
+using UserTesting.BLL.Exceptions;
 using UserTesting.DAL.Entities;
 using UserTesting.DAL.UnitOfWorks;
 
@@ -16,9 +17,10 @@ public class TestService : ITestService
 		_mapper = mapper;
 	}
 
-    public async Task<IEnumerable<UserTestDto>> GetNotAnsweredAssignedToUser(string userId)
+    public async Task<IEnumerable<UserTestDto>> GetNotAnsweredAssignedToUser(User user)
 	{
-		var tests = await _unitOfWork.UserTestRepository.GetAllByUserIdAsync(userId);
+		var tests = await _unitOfWork.UserTestRepository.GetAllByUserIdAsync(user.Id)
+			?? throw new UserHasNoAssignedTests(user.UserName);
 
 		var userTestDtos = _mapper.Map<List<UserTestDto>>(tests);
 
