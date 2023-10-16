@@ -7,5 +7,7 @@ public interface IUnitOfWork : IDisposable
 {
 	ITestRepository TestRepository { get; }
 
+	IUserTestRepository UserTestRepository { get; }
+
 	Task SaveAsync();
 }

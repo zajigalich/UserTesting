@@ -7,6 +7,7 @@ public class UnitOfWork : IUnitOfWork
 {
 	private bool _disposed;
 	private ITestRepository _testRepository;
+	private IUserTestRepository _userTestRepository;
 
     public UnitOfWork(UserTestingDbContext dbContext)
     {
@@ -14,6 +15,9 @@ public class UnitOfWork : IUnitOfWork
 	}
 
 	public ITestRepository TestRepository => _testRepository ??= new TestRepository(DbContext);
+
+	public IUserTestRepository UserTestRepository => _userTestRepository ??= new UserTestRepository(DbContext);
+
 
 	protected UserTestingDbContext DbContext { get; }
 
