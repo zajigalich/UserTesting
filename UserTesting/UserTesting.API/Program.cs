@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using UserTesting.DAL.Entities;
 using UserTesting.DAL.Data;
 using UserTesting.API.Mappings;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace UserTesting.API
 {
@@ -98,6 +99,8 @@ namespace UserTesting.API
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+
+			app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 			app.UseCors();
 			app.UseOutputCache();
