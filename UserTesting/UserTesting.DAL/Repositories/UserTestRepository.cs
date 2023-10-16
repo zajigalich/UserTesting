@@ -20,4 +20,13 @@ public class UserTestRepository : IUserTestRepository
 					.Where(ut => ut.UserId == userId)
 					.ToListAsync();
 	}
+
+	public async Task<UserTest?> GetAsync(string userId, Guid testId)
+	{
+		return await _dbContext.UserTests
+			.Include (ut => ut.Test)
+			.Where (ut => ut.UserId == userId)
+			.Where (ut => ut.TestId == testId)
+			.FirstOrDefaultAsync();
+	}
 }
