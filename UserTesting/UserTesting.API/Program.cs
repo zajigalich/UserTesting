@@ -4,6 +4,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using UserTesting.DAL.Entities;
+using UserTesting.DAL.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +61,13 @@ builder.Services.AddOutputCache(options =>
 // Configure services from class libs (adding them to container)
 builder.Services.ConfigureBusinessLogicLayerServices();
 builder.Services.ConfigureDataAccessLayerServices(builder.Configuration.GetConnectionString("UserTestingConnectionString")!);
+
+// Add Identity core
+builder.Services.AddIdentityCore<User>()
+	.AddRoles<IdentityRole>()
+	.AddTokenProvider<DataProtectorTokenProvider<User>>("UserTesting")
+	.AddEntityFrameworkStores<UserTestingDbContext>()
+	.AddDefaultTokenProviders();
 
 // Add Tokent Auth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
