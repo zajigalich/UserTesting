@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace UserTesting.DAL.Entities;
@@ -16,9 +17,12 @@ public class UserTest
 	[AllowNull]
 	public decimal? Mark { get; set; }
 
-	// Navigational props
+	[NotNull]
+	[DefaultValue(false)]
+    public bool Passed { get; set; } = false;
 
-	public virtual User User { get; set; }
+    // Navigational props
+    public virtual User User { get; set; }
 
 	public virtual Test Test { get; set; }
 }

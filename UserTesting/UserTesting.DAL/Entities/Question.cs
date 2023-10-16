@@ -1,13 +1,12 @@
-﻿namespace UserTesting.DAL.Entities
+﻿namespace UserTesting.DAL.Entities;
+
+public class Question
 {
-	public class Question
-	{
-		public int Number { get; set; }
+	public int Number { get; set; }
 
-		public string Text { get; set; }
+	public string Text { get; set; }
 
-		public List<Option> Options { get; set; }
+	public List<Option> Options { get; set; }
 
-		public Option Answer { get; set; }
-	}
+	public Option Answer { get; set; }
 }
