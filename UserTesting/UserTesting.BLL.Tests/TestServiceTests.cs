@@ -65,7 +65,7 @@ public class TestServiceTests
 		_unitOfWorkMock.Setup(x => x.UserTestRepository.GetAsync(user.Id, testId))
 			.ReturnsAsync((UserTest)null);
 
-		// Act & Assert
+		// Act and Assert
 		var ex = Assert.ThrowsAsync<UserHasNoAccessToTestException>(
 			async () => await _testService.GetNotAnsweredAsync(user, testId));
 
@@ -91,7 +91,7 @@ public class TestServiceTests
 		_unitOfWorkMock.Setup(x => x.UserTestRepository.GetAsync(user.Id, testId))
 			.ReturnsAsync(userTest);
 
-		// Act & Assert
+		// Act and Assert
 		var ex = Assert.ThrowsAsync<UserAlreadyPassedTestException>(
 			async () => await _testService.GetNotAnsweredAsync(user, testId));
 
@@ -108,7 +108,7 @@ public class TestServiceTests
 		_unitOfWorkMock.Setup(x => x.TestRepository.GetByIdAsync(testId))
 			.ReturnsAsync((Test)null);
 
-		// Act & Assert
+		// Act and Assert
 		var ex = Assert.ThrowsAsync<TestNotFoundException>(
 			async () => await _testService.GetNotAnsweredAsync(user, testId));
 
@@ -160,7 +160,7 @@ public class TestServiceTests
 		_unitOfWorkMock.Setup(x => x.UserTestRepository.GetAllByUserIdAsync(user.Id))
 			.ReturnsAsync((List<UserTest>)null);
 
-		// Act & Assert
+		// Act and Assert
 		var ex = Assert.ThrowsAsync<UserHasNoAssignedTestsException>(
 			async () => await _testService.GetAllAsignedUserTestsAsync(user));
 
@@ -235,7 +235,7 @@ public class TestServiceTests
 			.ReturnsAsync(new Test());
 		_unitOfWorkMock.Setup(x => x.UserTestRepository.GetAsync(user.Id, testAnswersDto.TestId)).ReturnsAsync((UserTest)null);
 
-		// Act & Assert
+		// Act and Assert
 		var ex = Assert.ThrowsAsync<UserHasNoAccessToTestException>(
 			async () => await _testService.PassAsync(user, testAnswersDto));
 
@@ -256,7 +256,7 @@ public class TestServiceTests
 			.ReturnsAsync(new Test());
 		_unitOfWorkMock.Setup(x => x.UserTestRepository.GetAsync(user.Id, testId)).ReturnsAsync(userTest);
 
-		// Act & Assert
+		// Act and Assert
 		var ex = Assert.ThrowsAsync<UserAlreadyPassedTestException>(
 			async () => await _testService.PassAsync(user, testAnswersDto));
 
@@ -277,7 +277,7 @@ public class TestServiceTests
 			.ReturnsAsync((Test)null);
 		_unitOfWorkMock.Setup(x => x.UserTestRepository.GetAsync(user.Id, testId)).ReturnsAsync(userTest);
 
-		// Act & Assert
+		// Act and Assert
 		var ex = Assert.ThrowsAsync<TestNotFoundException>(
 			async () => await _testService.PassAsync(user, testAnswersDto));
 
