@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -17,5 +17,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\UserTesting.DAL\UserTesting.DAL.csproj" />
+		<ProjectReference Include="..\UserTesting.BLL\UserTesting.BLL.csproj" />
 	</ItemGroup>
 </Project>

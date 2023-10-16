@@ -7,7 +7,7 @@ using UserTesting.DAL.Entities;
 
 namespace UserTesting.BLL.Services;
 
-public class TokenService
+public class TokenService : ITokenService
 {
 	private readonly IConfiguration _configuration;
 

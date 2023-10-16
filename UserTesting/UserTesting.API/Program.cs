@@ -1,4 +1,5 @@
 using UserTesting.DAL;
+using UserTesting.BLL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddOutputCache(options =>
 });
 
 // Configure services from class libs (adding them to container)
+builder.Services.ConfigureBusinessLogicLayerServices();
 builder.Services.ConfigureDataAccessLayerServices(builder.Configuration.GetConnectionString("UserTestingConnectionString")!);
 
 var app = builder.Build();
