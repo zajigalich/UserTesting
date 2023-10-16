@@ -54,7 +54,7 @@ builder.Services.AddOutputCache(options =>
 		.Tag("tag-all")
 		.Expire(TimeSpan.FromSeconds(60)));
 	options.AddBasePolicy(builder =>
-		builder.With(r => r.HttpContext.Request.Path.StartsWithSegments("/api/tests"))
+		builder.With(r => r.HttpContext.Request.Path.StartsWithSegments("/api/Tests"))
 		.Tag("tag-test")
 		.Expire(TimeSpan.FromSeconds(60)));
 });
