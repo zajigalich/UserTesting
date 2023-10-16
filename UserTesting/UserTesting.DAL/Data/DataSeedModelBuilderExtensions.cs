@@ -19,6 +19,7 @@ internal static class DataSeedModelBuilderExtensions
 		{
 			"11bac029-c18b-40dd-baca-2854e731149f",
 			"bf97c9eb-46e2-487e-9bd8-b0ec737a90e9",
+			"146df55d-308b-4846-91b7-d5725b8c6045"
 		};
 		var userRoleId = "d96d22fd-fbe0-4ba1-a8d0-7f076c3e3edd";
 
@@ -46,6 +47,11 @@ internal static class DataSeedModelBuilderExtensions
 				{
 					RoleId = userRoleId,
 					UserId = userIds[1],
+				},
+				new IdentityUserRole<string>()
+				{
+					RoleId = userRoleId,
+					UserId = userIds[2],
 				}
 			};
 
@@ -99,11 +105,20 @@ internal static class DataSeedModelBuilderExtensions
 				Email = "user2@example.com",
 				NormalizedEmail = "USER2@EXAMPLE.COM"
 			},
+			new User
+			{
+				Id = userIds[2],
+				UserName = "User3",
+				NormalizedUserName = "USER3",
+				Email = "user3@example.com",
+				NormalizedEmail = "USER2@EXAMPLE.COM"
+			}
 		};
 
 		PasswordHasher<User> ph = new();
 		users[0].PasswordHash = ph.HashPassword(user: users[0], "user1");
 		users[1].PasswordHash = ph.HashPassword(user: users[1], "user2");
+		users[2].PasswordHash = ph.HashPassword(user: users[2], "user3");
 
 		modelBuilder.Entity<User>().HasData(users);
 	}
