@@ -27,7 +27,7 @@ public class TestService : ITestService
 
 	public async Task<TestWithoutAnswersDto> GetNotAnsweredAsync(User user, Guid testId)
 	{
-		VerifyTestExists(testId);
+		await VerifyTestExistsAsync(testId);
 
 		var userTest = await _unitOfWork.UserTestRepository.GetAsync(user.Id, testId)
 			?? throw new UserHasNoAccessToTestException(user.UserName, testId);
@@ -45,9 +45,9 @@ public class TestService : ITestService
 		}
 	}
 
-	private void VerifyTestExists(Guid testId)
+	private async Task VerifyTestExistsAsync(Guid testId)
 	{
-		_ = _unitOfWork.TestRepository.GetByIdAsync(testId)
+		_ = await _unitOfWork.TestRepository.GetByIdAsync(testId)
 					?? throw new TestNotFoundException(testId);
 	}
 }
