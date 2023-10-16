@@ -1,120 +1,112 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using UserTesting.DAL.Data;
 using UserTesting.DAL.Entities;
+using UserTesting.DAL.Repositories;
 
-namespace UserTesting.DAL.Data;
+namespace UserTesting.DAL.Tests;
 
-internal static class DataSeedModelBuilderExtensions
+[TestFixture]
+public class DALTests
 {
-	public static void SeedData(this ModelBuilder modelBuilder)
+	private UserTestingDbContext _dbContext;
+
+	[SetUp]
+	public void Setup()
 	{
-		var testsIds = new List<Guid>
+		// Setup an in-memory database for testing
+		var options = new DbContextOptionsBuilder<UserTestingDbContext>()
+			.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+			.Options;
+
+		_dbContext = new UserTestingDbContext(options);
+
+		_dbContext.Database.EnsureCreated();
+	}
+
+	[TearDown]
+	public void TearDown()
+	{
+		_dbContext.Database.EnsureDeleted();
+		_dbContext.Dispose();
+	}
+
+	[Test]
+	[TestCaseSource(nameof(GetTestsData))]
+	public async Task Test_GetByIdAsync_Returns_Expected_Test(Test expectedTest)
+	{
+		// Arrange
+		var testRepo = new TestRepository(_dbContext);
+
+		// Act
+		var resultTest = await testRepo.GetByIdAsync(expectedTest.Id);
+
+		// Assert
+		Assert.That(resultTest, Is.Not.Null);
+		Assert.That(resultTest?.Id, Is.EqualTo(expectedTest.Id));
+
+		var comparer = new ObjectComparer();
+		comparer.Compare(expectedTest, resultTest);
+	}
+
+	[Test]
+	//[TestCaseSource(nameof(GetUserTestsData))]
+	public async Task UserTest_GetAllByUserIdAsync_Returns_All_UserTests_For_Given_User()
+	{
+		// Arrange
+		var userId = "11bac029-c18b-40dd-baca-2854e731149f";
+		var userTestRepo = new UserTestRepository(_dbContext);
+
+		// Act
+		var userTests = (await userTestRepo.GetAllByUserIdAsync(userId)).ToList();
+
+		// Assert
+		Assert.That(userTests.Count, Is.EqualTo(3));
+		Assert.That(userTests.TrueForAll(ut => ut.UserId == userId), Is.True);
+	}
+
+	[Test]
+	[TestCaseSource(nameof(GetUserTestsData))]
+	public async Task UserTest_GetAsync_Returns_Expected_UserTest_For_Given_User_Test(UserTest expectedUserTest)
+	{
+		// Arrange
+		var userTestRepo = new UserTestRepository(_dbContext);
+
+		// Act
+		var userTest = await userTestRepo.GetAsync(expectedUserTest.UserId, expectedUserTest.TestId);
+
+		// Assert
+		Assert.That(userTest, Is.Not.Null);
+		Assert.Multiple(() =>
 		{
-			Guid.Parse("ba4dfdda-e505-402e-8be2-d2c619974c9e"),
-			Guid.Parse("2cbae21d-0651-4609-b77c-a0d69af10349"),
-			Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974"),
-			Guid.Parse("0ccda22e-372a-48ef-afc6-9dc8b41007e1"),
-		};
-		var userIds = new List<string>
-		{
-			"11bac029-c18b-40dd-baca-2854e731149f",
-			"bf97c9eb-46e2-487e-9bd8-b0ec737a90e9",
-		};
-		var userRoleId = "d96d22fd-fbe0-4ba1-a8d0-7f076c3e3edd";
+			Assert.That(userTest?.UserId, Is.EqualTo(expectedUserTest.UserId));
+			Assert.That(userTest?.TestId, Is.EqualTo(expectedUserTest.TestId));
+		});
 
-		SeedRole(modelBuilder, userRoleId);
-		SeedUsers(modelBuilder, userIds);
-
-		// Assign User role to seeded users
-		SeedUserRole(modelBuilder, userIds, userRoleId);
-		SeedTests(modelBuilder, testsIds);
-		
-		// Assigning users to tests
-		SeedUserTests(modelBuilder, userIds, testsIds);
+		var comparer = new ObjectComparer();
+		comparer.Compare(expectedUserTest, userTest);
 	}
 
-	private static void SeedUserRole(ModelBuilder modelBuilder, List<string> userIds, string userRoleId)
-	{
-		var roleUsers = new List<IdentityUserRole<string>>()
-			{
-				new IdentityUserRole<string>()
-				{
-					RoleId = userRoleId,
-					UserId = userIds[0],
-				},
-				new IdentityUserRole<string>()
-				{
-					RoleId = userRoleId,
-					UserId = userIds[1],
-				}
-			};
-
-		modelBuilder.Entity<IdentityUserRole<string>>().HasData(roleUsers);
-	}
-
-	private static void SeedRole(ModelBuilder modelBuilder, string userRoleId)
-	{
-		modelBuilder.Entity<IdentityRole>().HasData(
-			new IdentityRole()
-			{
-				Id = userRoleId,
-				Name = "User",
-				NormalizedName = "USER",
-				ConcurrencyStamp = userRoleId
-			});
-	}
-
-	private static void SeedUserTests(ModelBuilder modelBuilder, List<string> userIds, List<Guid> testsIds)
+	private static IEnumerable<UserTest> GetUserTestsData()
 	{
 		var userTests = new List<UserTest>
 		{
-			new UserTest { UserId = userIds[0], TestId = testsIds[0], Mark = 0.8m, Passed = true },
-			new UserTest { UserId = userIds[0], TestId = testsIds[1], Mark = 0.3m, Passed = true },
-			new UserTest { UserId = userIds[0], TestId = testsIds[2] },
+			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("ba4dfdda-e505-402e-8be2-d2c619974c9e"), Mark = 0.8m, Passed = true },
+			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("2cbae21d-0651-4609-b77c-a0d69af10349"), Mark = 0.3m, Passed = true },
+			new UserTest { UserId = "11bac029-c18b-40dd-baca-2854e731149f", TestId = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974") },
 
-			new UserTest { UserId = userIds[1], TestId = testsIds[2] },
-			new UserTest { UserId = userIds[1], TestId = testsIds[3] },
+			new UserTest { UserId = "bf97c9eb-46e2-487e-9bd8-b0ec737a90e9", TestId = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974") },
+			new UserTest { UserId = "bf97c9eb-46e2-487e-9bd8-b0ec737a90e9", TestId = Guid.Parse("0ccda22e-372a-48ef-afc6-9dc8b41007e1") },
 		};
-
-		modelBuilder.Entity<UserTest>().HasData(userTests);
+		return userTests;
 	}
 
-	private static void SeedUsers(ModelBuilder modelBuilder, List<string> userIds)
-	{
-		var users = new List<User>
-		{
-			new User
-			{
-				Id = userIds[0],
-				UserName = "User1",
-				NormalizedUserName = "USER1",
-				Email = "user1@example.com",
-				NormalizedEmail = "USER1@EXAMPLE.COM",
-			},
-			new User
-			{
-				Id = userIds[1],
-				UserName = "User2",
-				NormalizedUserName = "USER2",
-				Email = "user2@example.com",
-				NormalizedEmail = "USER2@EXAMPLE.COM"
-			},
-		};
-
-		PasswordHasher<User> ph = new();
-		users[0].PasswordHash = ph.HashPassword(user: users[0], "user1");
-		users[1].PasswordHash = ph.HashPassword(user: users[1], "user2");
-
-		modelBuilder.Entity<User>().HasData(users);
-	}
-
-	private static void SeedTests(ModelBuilder modelBuilder, List<Guid> testsIds)
+	private static IEnumerable<Test> GetTestsData()
 	{
 		var tests = new List<Test>
 		{
 			new Test
 			{
-				Id = testsIds[0],
+				Id = Guid.Parse("ba4dfdda-e505-402e-8be2-d2c619974c9e"),
 				Name = "Test 1",
 				Description = "This is Test 1",
 				Questions = new List<Question>
@@ -159,7 +151,7 @@ internal static class DataSeedModelBuilderExtensions
 			},
 			new Test
 			{
-				Id = testsIds[1],
+				Id = Guid.Parse("2cbae21d-0651-4609-b77c-a0d69af10349"),
 				Name = "Test 2",
 				Description = "This is Test 2",
 				Questions = new List<Question>
@@ -204,7 +196,7 @@ internal static class DataSeedModelBuilderExtensions
 			},
 			new Test
 			{
-				Id = testsIds[2],
+				Id = Guid.Parse("591928f1-0e0a-4e7b-8b9d-e5c7a7791974"),
 				Name = "Test 3",
 				Description = "This is Test 3",
 				Questions = new List<Question>
@@ -249,7 +241,7 @@ internal static class DataSeedModelBuilderExtensions
 			},
 			new Test
 			{
-				Id = testsIds[3],
+				Id = Guid.Parse("0ccda22e-372a-48ef-afc6-9dc8b41007e1"),
 				Name = "Test 4",
 				Description = "This is Test 4",
 				Questions = new List<Question>
@@ -294,6 +286,6 @@ internal static class DataSeedModelBuilderExtensions
 			}
 		};
 
-		modelBuilder.Entity<Test>().HasData(tests);
+		return tests;
 	}
 }
