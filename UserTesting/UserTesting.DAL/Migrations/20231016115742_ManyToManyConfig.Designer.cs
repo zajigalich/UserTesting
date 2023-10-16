@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserTesting.DAL.Data;
 
@@ -11,9 +12,11 @@ using UserTesting.DAL.Data;
 namespace UserTesting.DAL.Migrations
 {
     [DbContext(typeof(UserTestingDbContext))]
-    partial class UserTestingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231016115742_ManyToManyConfig")]
+    partial class ManyToManyConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

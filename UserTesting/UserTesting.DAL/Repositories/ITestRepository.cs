@@ -1,5 +1,8 @@
-﻿namespace UserTesting.DAL.Repositories;
+﻿using UserTesting.DAL.Entities;
 
-internal interface ITestRepository
+namespace UserTesting.DAL.Repositories;
+
+public interface ITestRepository
 {
+	Task<Test?> GetById(Guid id);
 }

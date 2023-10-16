@@ -31,6 +31,11 @@ public class UserTestingDbContext : IdentityDbContext<User>
 			.WithMany(t => t.UserTests)
 			.HasForeignKey(ut => ut.TestId);
 
+		modelBuilder.Entity<Test>()
+			.HasMany(t => t.Users)
+			.WithMany(u => u.Tests)
+			.UsingEntity<UserTest>();
+
 		// Serializing questions as json string in Test entity
 		modelBuilder.Entity<Test>().Property(t => t.Questions)
 				.HasConversion(
