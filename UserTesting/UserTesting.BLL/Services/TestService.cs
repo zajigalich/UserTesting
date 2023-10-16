@@ -22,13 +22,32 @@ public class TestService : ITestService
 		var tests = await _unitOfWork.UserTestRepository.GetAllByUserIdAsync(user.Id)
 			?? throw new UserHasNoAssignedTestsException(user.UserName);
 
-		var userTestDtos = _mapper.Map<List<UserTestDto>>(tests);
-
-		return userTestDtos;
+		return _mapper.Map<List<UserTestDto>>(tests);
 	}
 
-	public Task<TestWithoutAnswersDto> GetNotAnsweredAsync(User user, Guid testId)
+	public async Task<TestWithoutAnswersDto> GetNotAnsweredAsync(User user, Guid testId)
 	{
-		throw new NotImplementedException();
+		VerifyTestExists(testId);
+
+		var userTest = await _unitOfWork.UserTestRepository.GetAsync(user.Id, testId)
+			?? throw new UserHasNoAccessToTestException(user.UserName, testId);
+
+		VerifyTestIsNotPassed(user, testId, userTest);
+
+		return _mapper.Map<TestWithoutAnswersDto>(userTest.Test);
+	}
+
+	private static void VerifyTestIsNotPassed(User user, Guid testId, UserTest userTest)
+	{
+		if (userTest.Passed)
+		{
+			throw new UserAlreadyPassedTestException(user.UserName, testId);
+		}
+	}
+
+	private void VerifyTestExists(Guid testId)
+	{
+		_ = _unitOfWork.TestRepository.GetByIdAsync(testId)
+					?? throw new TestNotFoundException(testId);
 	}
 }

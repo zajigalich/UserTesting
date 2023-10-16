@@ -13,5 +13,10 @@ public class AutoMapperProfile : Profile
             dest => dest.Name,
             opt => opt.MapFrom(src => src.Test.Name)
             );
+
+        CreateMap<Test, TestWithoutAnswersDto>();
+        CreateMap<Option, OptionDto>();
+        CreateMap<Question, QuestionWithoutAnswerDto>();
+        CreateMap<Question, QuestionDto>();
     }
 }
