@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using UserTesting.BLL.DTOs;
 using UserTesting.DAL.Entities;
-using UserTesting.DAL.UnitOfWork;
+using UserTesting.DAL.UnitOfWorks;
 
 namespace UserTesting.BLL.Services;
 
@@ -20,6 +20,6 @@ public class TestService : ITestService
 	{
 		var tests = await _unitOfWork.TestRepository.GetAllByUserIdAsync(user.Id);
 
-
+		return null;
 	}
 }

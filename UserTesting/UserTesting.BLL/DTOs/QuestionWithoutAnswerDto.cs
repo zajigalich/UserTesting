@@ -4,7 +4,7 @@ namespace UserTesting.BLL.DTOs;
 
 public class QuestionWithoutAnswerDto
 {
-	public int Number { get; set; }
+	public int Ordinal { get; set; }
 
 	public string Text { get; set; }
 

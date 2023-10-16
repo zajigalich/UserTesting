@@ -1,7 +1,7 @@
 ﻿using UserTesting.DAL.Data;
 using UserTesting.DAL.Repositories;
 
-namespace UserTesting.DAL.UnitOfWork;
+namespace UserTesting.DAL.UnitOfWorks;
 
 public class UnitOfWork : IUnitOfWork
 {

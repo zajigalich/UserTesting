@@ -121,39 +121,39 @@ internal static class DataSeedModelBuilderExtensions
 				{
 					new Question
 					{
-						Number = 1,
+						Ordinal = 1,
 						Text = "Question 1",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 2, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 1, Text = "Option 1" }
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
 					},
 					new Question
 					{
-						Number = 2,
+						Ordinal = 2,
 						Text = "Question 2",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 2, Text = "Option 2" }
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
 					},
 					new Question
 					{
-						Number = 3,
+						Ordinal = 3,
 						Text = "Question 3",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 3, Text = "Option 3" }
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
 					},
 				}
 			},
@@ -166,39 +166,39 @@ internal static class DataSeedModelBuilderExtensions
 				{
 					new Question
 					{
-						Number = 1,
+						Ordinal = 1,
 						Text = "Question 1",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 2, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 1, Text = "Option 1" }
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
 					},
 					new Question
 					{
-						Number = 2,
+						Ordinal = 2,
 						Text = "Question 2",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 2, Text = "Option 2" }
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
 					},
 					new Question
 					{
-						Number = 3,
+						Ordinal = 3,
 						Text = "Question 3",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 3, Text = "Option 3" }
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
 					},
 				}
 			},
@@ -211,39 +211,39 @@ internal static class DataSeedModelBuilderExtensions
 				{
 					new Question
 					{
-						Number = 1,
+						Ordinal = 1,
 						Text = "Question 1",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 2, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 1, Text = "Option 1" }
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
 					},
 					new Question
 					{
-						Number = 2,
+						Ordinal = 2,
 						Text = "Question 2",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 2, Text = "Option 2" }
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
 					},
 					new Question
 					{
-						Number = 3,
+						Ordinal = 3,
 						Text = "Question 3",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 3, Text = "Option 3" }
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
 					},
 				}
 			},
@@ -256,39 +256,39 @@ internal static class DataSeedModelBuilderExtensions
 				{
 					new Question
 					{
-						Number = 1,
+						Ordinal = 1,
 						Text = "Question 1",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 2, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 2, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 1, Text = "Option 1" }
+						Answer = new Option { Ordinal = 1, Text = "Option 1" }
 					},
 					new Question
 					{
-						Number = 2,
+						Ordinal = 2,
 						Text = "Question 2",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 2, Text = "Option 2" }
+						Answer = new Option { Ordinal = 2, Text = "Option 2" }
 					},
 					new Question
 					{
-						Number = 3,
+						Ordinal = 3,
 						Text = "Question 3",
 						Options = new List<Option>
 						{
-							new Option { Number = 1, Text = "Option 1" },
-							new Option { Number = 2, Text = "Option 2" },
-							new Option { Number = 3, Text = "Option 3" },
+							new Option { Ordinal = 1, Text = "Option 1" },
+							new Option { Ordinal = 2, Text = "Option 2" },
+							new Option { Ordinal = 3, Text = "Option 3" },
 						},
-						Answer = new Option { Number = 3, Text = "Option 3" }
+						Answer = new Option { Ordinal = 3, Text = "Option 3" }
 					},
 				}
 			}

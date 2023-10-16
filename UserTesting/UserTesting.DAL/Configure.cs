@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using UserTesting.DAL.Data;
 using UserTesting.DAL.Repositories;
+using UserTesting.DAL.UnitOfWorks;
 
 namespace UserTesting.DAL;
 
@@ -14,6 +15,7 @@ public static class Configure
 			options.UseSqlServer(connectionString));
 
 		// Add Services
+		services.AddScoped<IUnitOfWork, UnitOfWork>();
 		services.AddScoped<ITestRepository, TestRepository>();
 	}
 }
