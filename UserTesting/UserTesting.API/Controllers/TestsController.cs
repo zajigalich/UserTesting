@@ -60,7 +60,7 @@ public class TestsController : ControllerBase
 
 		var userTestDto = await _testService.PassAsync(user, testAnswersDto);
 
-		//await cacheStore.EvictByTagAsync("tag-all", default);
+		await cacheStore.EvictByTagAsync("tag-all", default);
 
 		return Ok(userTestDto);
 	}
