@@ -10,6 +10,7 @@ using UserTesting.DAL.Data;
 using UserTesting.API.Mappings;
 using Microsoft.AspNetCore.Diagnostics;
 using UserTesting.API.Middlewares;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserTesting.API
 {
@@ -92,7 +93,27 @@ namespace UserTesting.API
 						Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
 				});
 
+			builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+			{
+				builder.WithOrigins("http://localhost:3000");
+			}));
+
+			builder.Services.Configure<RouteOptions>(options =>
+			{
+				options.LowercaseUrls = true;
+			});
+
 			var app = builder.Build();
+
+			// Auto db migration with docker compose 
+			using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
+			{
+				var context = serviceScope?.ServiceProvider?.GetRequiredService<UserTestingDbContext>();
+				if (context != null && context.Database.GetPendingMigrations().Any())
+				{
+					context?.Database?.Migrate();
+				}
+			}
 
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
@@ -103,10 +124,10 @@ namespace UserTesting.API
 
 			app.UseMiddleware<AppExceptionHandlerMiddleware>();
 
-			app.UseCors();
+			app.UseCors("corsapp");
 			app.UseOutputCache();
 
-			app.UseHttpsRedirection();
+			//app.UseHttpsRedirection();
 
 			app.UseAuthorization();
 

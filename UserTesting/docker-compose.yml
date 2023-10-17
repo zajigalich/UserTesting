@@ -1,0 +1,41 @@
+version: '3.4'
+
+networks:
+  user-testing:
+    driver: bridge
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: UserTesting.API/Dockerfile
+    networks:
+      - user-testing
+    depends_on:
+      - ms-db
+
+  client:
+    image: client  
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    networks:
+      - user-testing
+    depends_on:
+      - api
+
+  proxy:
+    image: nginx:mainline
+    networks:
+      - user-testing
+    depends_on:
+      - client
+      - api
+
+  ms-db:
+    container_name: us-ms-sql
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    networks:
+      - user-testing
+
