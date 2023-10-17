@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using UserTesting.DAL.Entities;
 using UserTesting.DAL.Data;
 using UserTesting.API.Mappings;
-using Microsoft.AspNetCore.Diagnostics;
 using UserTesting.API.Middlewares;
 using Microsoft.EntityFrameworkCore;
 

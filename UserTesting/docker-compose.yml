@@ -15,22 +15,22 @@ services:
     depends_on:
       - ms-db
 
-  client:
-    image: client  
-    build:
-      context: ./ui
-      dockerfile: Dockerfile
-    networks:
-      - user-testing
-    depends_on:
-      - api
+  # client:
+  #   image: client  
+  #   build:
+  #     context: ./ui
+  #     dockerfile: Dockerfile
+  #   networks:
+  #     - user-testing
+  #   depends_on:
+  #     - api
 
   proxy:
     image: nginx:mainline
     networks:
       - user-testing
     depends_on:
-      - client
+      # - client
       - api
 
   ms-db:
