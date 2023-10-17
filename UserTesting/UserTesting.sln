@@ -32,6 +32,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserTesting.API.Tests", "Us
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{206F9FE5-2CE8-4AC6-9234-0D305EB5348E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3E75CB6C-CE97-447D-9A77-57B9504BE3BD}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.MD = ..\README.MD
+		..\Screenshots\Screenshot 2023-10-17 174643.png = ..\Screenshots\Screenshot 2023-10-17 174643.png
+		..\Screenshots\Screenshot 2023-10-17 174735.png = ..\Screenshots\Screenshot 2023-10-17 174735.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{2D66B468-0D5B-4792-927A-194B4E71B6A9}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Screenshot 2023-10-17 174301.png = ..\..\Screenshot 2023-10-17 174301.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +81,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D66B468-0D5B-4792-927A-194B4E71B6A9} = {3E75CB6C-CE97-447D-9A77-57B9504BE3BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7655BAA1-215F-4673-AF8B-F1AB916114B3}

@@ -31,7 +31,7 @@ public class TestsControllerIntegrationTests
 		// Arrange
 		var client = _factory.CreateClient();
 
-		var user = new User { Id = "11bac029-c18b-40dd-baca-2854e731149f", Email = "user1@example.com" };
+		var user = new User { Id = "bf97c9eb-46e2-487e-9bd8-b0ec737a90e9", Email = "user2@example.com" };
 		var roles = new List<string> { "User" };
 
 		var jwtToken = _tokenService.CreateJwtToken(user, roles);
