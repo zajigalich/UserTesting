@@ -37,20 +37,20 @@ namespace UserTesting.API
 
 				options.AddSecurityRequirement(new OpenApiSecurityRequirement()
 				{
-		{
-			new OpenApiSecurityScheme()
-			{
-				Reference = new OpenApiReference()
-				{
-					Type = ReferenceType.SecurityScheme,
-					Id = JwtBearerDefaults.AuthenticationScheme
-				},
-				Scheme = "Oauth2",
-				Name = JwtBearerDefaults.AuthenticationScheme,
-				In = ParameterLocation.Header
-			},
-			new List<string>()
-		}
+					{
+						new OpenApiSecurityScheme()
+						{
+							Reference = new OpenApiReference()
+							{
+								Type = ReferenceType.SecurityScheme,
+								Id = JwtBearerDefaults.AuthenticationScheme
+							},
+							Scheme = "Oauth2",
+							Name = JwtBearerDefaults.AuthenticationScheme,
+							In = ParameterLocation.Header
+						},
+						new List<string>()
+					}
 				});
 			});
 
