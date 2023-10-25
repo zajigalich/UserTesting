@@ -20,7 +20,7 @@ public class AppExceptionHandlerMiddleware
 		}
 		catch (AppException ex)
 		{
-			context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+			context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 			context.Response.ContentType = "application/json";
 
 			var error = new
