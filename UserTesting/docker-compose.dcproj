@@ -8,4 +8,12 @@
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>usertesting.api</DockerServiceName>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include=".dockerignore" />
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose.yml" />
+    <None Include="nginx.conf" />
+  </ItemGroup>
 </Project>
