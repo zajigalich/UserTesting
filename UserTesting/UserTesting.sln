@@ -30,8 +30,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserTesting.API.Tests", "Us
 		{77D12FD4-FBBF-4B14-AF5A-BEF7D5F85B28} = {77D12FD4-FBBF-4B14-AF5A-BEF7D5F85B28}
 	EndProjectSection
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{206F9FE5-2CE8-4AC6-9234-0D305EB5348E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3E75CB6C-CE97-447D-9A77-57B9504BE3BD}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.MD = ..\README.MD
@@ -43,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots"
 	ProjectSection(SolutionItems) = preProject
 		..\..\Screenshot 2023-10-17 174301.png = ..\..\Screenshot 2023-10-17 174301.png
 	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{206F9FE5-2CE8-4AC6-9234-0D305EB5348E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
