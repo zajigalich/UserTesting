@@ -104,7 +104,7 @@ namespace UserTesting.API
 
 			var app = builder.Build();
 
-			// Auto db migration with docker compose 
+			// Auto db migration 
 			using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
 			{
 				var context = serviceScope?.ServiceProvider?.GetRequiredService<UserTestingDbContext>();

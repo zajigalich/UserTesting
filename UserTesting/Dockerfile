@@ -5,9 +5,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["UserTesting.API/UserTesting.API.csproj", "UserTesting.API/"]
-COPY ["UserTesting.DAL/UserTesting.DAL.csproj", "UserTesting.DAL/"]
-COPY ["UserTesting.BLL/UserTesting.BLL.csproj", "UserTesting.BLL/"]
+COPY ["./UserTesting.API/UserTesting.API.csproj", "./UserTesting.API/"]
+COPY ["./UserTesting.DAL/UserTesting.DAL.csproj", "./UserTesting.DAL/"]
+COPY ["./UserTesting.BLL/UserTesting.BLL.csproj", "./UserTesting.BLL/"]
 RUN dotnet restore "UserTesting.API/UserTesting.API.csproj"
 COPY . .
 WORKDIR "/src/UserTesting.API"

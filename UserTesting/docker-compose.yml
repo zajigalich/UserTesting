@@ -6,10 +6,10 @@ networks:
 
 services:
   api:
-    image: ${DOCKER_REGISTRY-}api
+    image: ${DOCKER_REGISTRY-}api:latest
     build:
       context: .
-      dockerfile: UserTesting.API/Dockerfile
+      dockerfile: ./Dockerfile
     networks:
       - user-testing
     depends_on:
